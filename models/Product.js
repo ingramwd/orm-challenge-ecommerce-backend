@@ -22,7 +22,7 @@ Product.init(
       allowNull: false
     },
     price: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       validate: {
         isInt: function (num) {
@@ -37,8 +37,24 @@ Product.init(
     },
     stock: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 10,
+      validate: {
+        isInt: function (num) {
+          //validating the input is a number
+          if (typeof num == "number") {
+            return Number.isInteger(num);
+          } else {
+            return false
+          }
+        }
+      }
+
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
       references: {
-        model: 'Category',
+        model: 'category',
         key: 'id'
       }
     }
